@@ -1,0 +1,5 @@
+
+Just a tip: create a "build" directory, "cd build" and "cmake ..", "make"
+then it won't shitting around the source dir.
+
+
