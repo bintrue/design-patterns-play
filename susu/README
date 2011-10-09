@@ -1,0 +1,11 @@
+
+Just a tip: create a "build" directory, "cd build" and "cmake ..", "make"
+then it won't shitting around the source dir.
+
+
+SingletonCallOnce: on GCC 4.6.1 std::call_once is not working.
+           It is exiting with unknown error.
+
+SingletonCallOnceBoost:
+    just the same implementation as SingletonCallOnce, using boost::call_once
+
