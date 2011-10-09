@@ -7,5 +7,7 @@ SingletonCallOnce: on GCC 4.6.1 std::call_once is not working.
            It is exiting with unknown error.
 
 SingletonCallOnceBoost:
-    just the same implementation as SingletonCallOnce, using boost::call_once
+    similar implementation as SingletonCallOnce, using boost::call_once, and boost's unique_ptr. (it is not using any c++0x feat.)
+
+TODO: Singleton that using c++0x feat (also unique_ptr), but call_once used from boost.
 
