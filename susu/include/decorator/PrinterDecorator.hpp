@@ -9,7 +9,7 @@ namespace decorator
   {
     public:
       PrinterDecorator( PrinterIf* printer );
-      virtual ~PublicDecorator();
+      virtual ~PrinterDecorator();
       virtual void print( const std::string & text );
     private:
       PrinterIf* m_printer;

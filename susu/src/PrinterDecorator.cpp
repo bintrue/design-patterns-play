@@ -10,6 +10,7 @@ decorator::PrinterDecorator::~PrinterDecorator()
 {
 }
 
+void
 decorator::PrinterDecorator::print( const std::string & text )
 {
   m_printer->print( text );

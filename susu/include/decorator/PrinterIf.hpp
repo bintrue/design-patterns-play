@@ -8,7 +8,7 @@ namespace decorator
   class PrinterIf 
   {
     public:
-      virtual ~PrinterIf();
+      virtual ~PrinterIf() {}
       virtual void print( const std::string & ) = 0;
   };
 }
