@@ -15,8 +15,12 @@ namespace singleton
   class SingletonCallOnce
   {
     public:
-      static T* getInstance();
+
+      static
+      const std::shared_ptr<T> getInstance();
+
       virtual ~SingletonCallOnce();
+
     protected:
       // instantation allowed from inside only
       SingletonCallOnce();
@@ -27,7 +31,7 @@ namespace singleton
       SingletonCallOnce( const SingletonCallOnce & )                 = delete;
       const SingletonCallOnce& operator=( const SingletonCallOnce& ) = delete;
       
-      static std::unique_ptr<T> m_singleton;
+      static std::shared_ptr<T> m_singleton;
       static std::once_flag     m_flag;
   };
 }
