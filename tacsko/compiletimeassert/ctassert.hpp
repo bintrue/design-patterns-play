@@ -9,11 +9,11 @@
 template <bool t>
 struct ctassert {
   enum { N = 1 - 2 * int(!t) };
-  static char A[N];
+  static char CompileTimeAssertion[N];
 };
 
 template <bool t>
-char ctassert<t>::A[N];
+char ctassert<t>::CompileTimeAssertion[N];
 
 #endif
 
