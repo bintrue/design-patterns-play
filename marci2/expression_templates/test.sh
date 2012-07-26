@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-g++ -o expression expression.cpp
-g++ -o naive naive.cpp
+g++ -DEXPRESSION -o expression expression.cpp
+g++ -o naive expression.cpp
 
+echo measuring expression
 time expression >/dev/null
+echo measuring naive
 time naive >/dev/null
 

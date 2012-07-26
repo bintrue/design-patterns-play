@@ -7,6 +7,7 @@
 
 typedef double MatrixDataType;
 
+#ifdef EXPRESSION
 struct Addition
 {
   inline static MatrixDataType execute(MatrixDataType l, MatrixDataType r)
@@ -28,21 +29,24 @@ struct Expression
     return Op::execute(lhs(row, col), rhs(row, col));
   }
 };
-
+#endif
 
 class Matrix
 {
   public:
     Matrix(int row = 100, int col = 10): m_rows(row), m_cols(col), data(new MatrixDataType[row * col])
     {
+      NewMatrix();
       std::fill(&data[0], &data[row * col], MatrixDataType());
     }
     Matrix(const Matrix& oth): m_rows(oth.m_rows), m_cols(oth.m_cols), data(new MatrixDataType[m_rows * m_cols])
     {
+      NewMatrix();
       std::copy(&oth.data[0], &oth.data[m_rows * m_cols], &data[0]);
     }
     ~Matrix()
     {
+      KillMatrix();
       delete[] data;
     }
     MatrixDataType& operator()(int row, int col)
@@ -53,6 +57,7 @@ class Matrix
     {
       return data[row * m_cols + col];
     }
+#ifdef EXPRESSION
     template <class Lhs, class Op, class Rhs>
     Matrix& operator=(const Expression<Lhs, Op, Rhs>& expr)
     {
@@ -62,6 +67,24 @@ class Matrix
       }
       return *this;
     }
+#else
+    Matrix& operator=(const Matrix& oth)
+    {
+      std::copy(&oth.data[0], &oth.data[m_rows * m_cols], &data[0]);
+      return *this;
+    }
+#endif
+
+    static void NewMatrix()
+    {
+      MaxMatrix = std::max(++NumOfMatrix, MaxMatrix);
+    }
+    static void KillMatrix()
+    {
+      --NumOfMatrix;
+    }
+    static int NumOfMatrix;
+    static int MaxMatrix;
 
     const int m_rows;
     const int m_cols;
@@ -69,11 +92,26 @@ class Matrix
     MatrixDataType* data;
 };
 
+int Matrix::NumOfMatrix = 0;
+int Matrix::MaxMatrix = 0;
+
+#ifdef EXPRESSION
 template <class Lhs>
 Expression<Lhs, Addition, Matrix> operator+(const Lhs& lhs, const Matrix& rhs)
 {
   return Expression<Lhs, Addition, Matrix>(lhs, rhs);
 }
+#else
+Matrix operator+(const Matrix& lhs, const Matrix& rhs)
+{
+  Matrix res(lhs.m_rows, lhs.m_cols);
+  for (int i(0); i < res.m_rows * res.m_cols; ++i)
+  {
+    res.data[i] = lhs.data[i] + rhs.data[i];
+  }
+  return res;
+}
+#endif
 
 void PrintMatrix(const Matrix& m, const char name[] = "nincs")
 {
@@ -99,6 +137,7 @@ int main()
   {
     res = arr[0] + arr[1] + arr[2] + arr[3] + arr[4] + arr[5] + arr[6] + arr[7] + arr[8] + arr[9] + arr[10] + arr[11] + arr[12] + arr[13] + arr[14] + arr[15];
   }
+  std::cerr << "max instances at the same time: " << Matrix::MaxMatrix << '\n';
   PrintMatrix(res, "grand result");
 }
 
