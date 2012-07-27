@@ -34,7 +34,7 @@ struct Expression
 class Matrix
 {
   public:
-    Matrix(int row = 100, int col = 10): m_rows(row), m_cols(col), data(new MatrixDataType[row * col])
+    Matrix(int row = 100, int col = 100): m_rows(row), m_cols(col), data(new MatrixDataType[row * col])
     {
       NewMatrix();
       std::fill(&data[0], &data[row * col], MatrixDataType());
@@ -129,13 +129,14 @@ void PrintMatrix(const Matrix& m, const char name[] = "nincs")
 
 int main()
 {
-  Matrix arr[16];
-  for (int i(0); i<16; ++i)
+  const int MatrixNum = 32;
+  Matrix arr[MatrixNum];
+  for (int i(0); i < MatrixNum; ++i)
     arr[i].data[i] = 1;
   Matrix res;
   for (int i(0); i<10000; ++i)
   {
-    res = arr[0] + arr[1] + arr[2] + arr[3] + arr[4] + arr[5] + arr[6] + arr[7] + arr[8] + arr[9] + arr[10] + arr[11] + arr[12] + arr[13] + arr[14] + arr[15];
+    res = arr[0] + arr[1] + arr[2] + arr[3] + arr[4] + arr[5] + arr[6] + arr[7] + arr[8] + arr[9] + arr[10] + arr[11] + arr[12] + arr[13] + arr[14] + arr[15] + arr[16 + 0] + arr[16 + 1] + arr[16 + 2] + arr[16 + 3] + arr[16 + 4] + arr[16 + 5] + arr[16 + 6] + arr[16 + 7] + arr[16 + 8] + arr[16 + 9] + arr[16 + 10] + arr[16 + 11] + arr[16 + 12] + arr[16 + 13] + arr[16 + 14] + arr[16 + 15];
   }
   std::cerr << "max instances at the same time: " << Matrix::MaxMatrix << '\n';
   PrintMatrix(res, "grand result");
